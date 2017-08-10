@@ -1,0 +1,87 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AdminLTE</title>
+    <link rel="stylesheet" href="{% static 'plugins/select2/select2.min.css' %}">
+    <link rel="stylesheet" href="{% static 'dist/css/AdminLTE.min.css' %}">
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+</head>
+<body>
+<div class="wrapper">
+    <section class="content">
+        <div class="box box-default">
+            <div class="box-header with-border">
+                <h3 class="box-title">AdminLTE</h3>
+            </div>
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-md-6">
+
+                        <form class="formProceeds" role="form" action='' method="POST">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label>{{ form.filial.label }}</label>
+                                <select name="filial" id="filial" class="form-control select2" style="width: 100%;">
+                                    <option value=None>Выбрать</option>
+                                    {% for key, value in form.filial.field.choices %}
+                                        <option value={{ key }}>{{ value }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label>{{ form.locomotive_series.label }}</label>
+                                <select name="series" id="series" class="form-control select2" style="width: 100%;">
+                                    <option value=None>Выбрать</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label>{{ form.period_start.label }}</label>
+                                <select name="period_start" class="form-control select2" style="width: 100%;">
+                                    <option value=None>Выбрать</option>
+                                    {% for key, value in form.period_start.field.choices %}
+                                        <option value={{ key }}>{{ value }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label>{{ form.period_end.label }}</label>
+                                <select name="period_end" class="form-control select2" style="width: 100%;">
+                                    <option value=None>Выбрать</option>
+                                    {% for key, value in form.period_end.field.choices %}
+                                        <option value={{ key }}>{{ value }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div>
+                                <button type="submit" class="btn btn-success">Перестроить график</button>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <canvas id="locoProceeds" width="400" height="200"></canvas>
+
+</div>
+
+<script src="{% static 'plugins/jQuery/jquery-2.2.3.min.js' %}"></script>
+<script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'plugins/select2/select2.full.min.js' %}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+<script>
+    $(function () {
+        //Initialize Select2 Elements
+        $(".select2").select2();
+    });
+</script>
+
+</body>
+</html>
