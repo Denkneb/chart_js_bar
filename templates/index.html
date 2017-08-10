@@ -82,6 +82,51 @@
         $(".select2").select2();
     });
 </script>
-
+<script>
+    $(document).ready(function () {
+        var $myForm = $('.formProceeds');
+        $myForm.submit(function (event) {
+            event.preventDefault();
+            var $formData = $(this).serialize();
+            $.ajax({
+                method: "POST",
+                data: $formData,
+                success: function (arr) {
+                    var labels = [];
+                    for (var i = 0; i < arr.labels.length; i++) {
+                        labels.push(arr.labels[i])
+                    }
+                    var data = [];
+                    for (var g = 0; g < arr.data.length; g++) {
+                        data.push(arr.data[g])
+                    }
+                    var ctx = document.getElementById("locoProceeds");
+                    var myChart = new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: labels,
+                            datasets: [{
+                                label: '# Всего',
+                                data: data,
+                                backgroundColor: 'red',
+                                borderColor: 'red',
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                yAxes: [{
+                                    ticks: {
+                                        beginAtZero: true
+                                    }
+                                }]
+                            }
+                        }
+                    });
+                }
+            })
+        });
+    });
+</script>
 </body>
 </html>
