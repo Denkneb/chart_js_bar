@@ -126,6 +126,26 @@
                 }
             })
         });
+
+        $(function () {
+            $('select#filial').change(function () {
+                var optionSelected = $(this).find('.select2-selection__rendered');
+                var filial_name = optionSelected.context.value;
+                data = {'filial_name': filial_name};
+                $.ajax({
+                    url: '/get_selected/',
+                    type: 'GET',
+                    data: data,
+                    success: function (result) {
+                        $("#series option").remove();
+                        $('#series').append('<option value="None">Выбрать</option>');
+                        for (var i = 0; i < result.series.length; i++) {
+                            $('#series').append('<option value="' + result.series[i] + '">' + result.series[i] + '</option>')
+                        }
+                    }
+                });
+            });
+        });
     });
 </script>
 </body>
